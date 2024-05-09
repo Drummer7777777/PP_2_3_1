@@ -14,11 +14,14 @@ import java.util.List;
 
 @Controller
 public class CarsController {
-    CarService carService;
+    private final CarService carService;
+
+    public CarsController(CarService carService) {
+        this.carService = carService;
+    }
 
     @GetMapping(value = "/cars")
     public String printCars(ModelMap model, @RequestParam(defaultValue = "5", name = "count") int count) {
-        carService = new CarServiceImpl();
         List<Car> carsResponse = new ArrayList<>(carService.getCars(count));
         model.addAttribute("cars" , carsResponse);
         return "cars";
